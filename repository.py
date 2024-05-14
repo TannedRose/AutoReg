@@ -24,4 +24,3 @@ class TaskRepository:
             note_models = result.scalars().all()
             return note_models
 
-# query = select(NoteOrm)
