@@ -1,10 +1,10 @@
 from sqlalchemy import select
 
-from db import new_session, NoteOrm
+from src.db.db import new_session, NoteOrm
 from schemas import NoteAdd, Note
 
 
-class TaskRepository:
+class NotesRepository:
     @classmethod
     async def add(cls, data: NoteAdd):
         async with new_session() as session:

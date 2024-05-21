@@ -1,10 +1,11 @@
 from typing import Optional
 from datetime import datetime
-from db import date
+from src.db.db import date
 from pydantic import BaseModel
 
 
 class NoteAdd(BaseModel):
+    user_id: int
     datetime: str = date
     category: str
     name: Optional[str]
