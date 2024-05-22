@@ -13,7 +13,7 @@ router = APIRouter(dependencies=[Authenticate])
 async def add_note(
         request: Request, db_session: AsyncDBSession, data: NoteAdd
 ):
-    note = NoteT(**data.model_dump(), user_id=request.scope["state"]["user"].id)
+    note = NoteOrm(**data.model_dump(), user_id=request.scope["state"]["user"].id)
     db_session.add(instance=note)
     try:
         await db_session.commit()

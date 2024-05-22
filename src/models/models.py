@@ -1,4 +1,5 @@
 from sqlalchemy import Column, CHAR, VARCHAR, INT, ForeignKey, TIMESTAMP
+from sqlalchemy.orm import relationship
 from ulid import ULID
 from .base import Base
 
@@ -14,6 +15,7 @@ class User(Base):
 
     def __str__(self) -> str:
         return self.email
+
 class NoteOrm(Base):
     __tablename__ = "notes"
     user_id = Column(CHAR(length=26), ForeignKey(column=User.id, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
@@ -27,3 +29,4 @@ class NoteOrm(Base):
 
     def __str__(self) -> str:
         return self.name
+
