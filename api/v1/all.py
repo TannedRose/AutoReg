@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 
-from src.db.db import NoteT
+from src.models import NoteOrm
 from src.dependencies import AsyncDBSession, Authenticate
 from fastapi import APIRouter, Depends, HTTPException
 from starlette.requests import Request
