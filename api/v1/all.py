@@ -1,5 +1,3 @@
-from typing import Annotated
-
 from sqlalchemy.exc import IntegrityError
 
 from src.db.db import NoteT

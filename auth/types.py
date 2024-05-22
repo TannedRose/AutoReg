@@ -13,6 +13,6 @@ class UserRegister(UserLogin):
     confirm_password: PasswordStr
 
     @model_validator(mode="after")
-    def validate_pasword(self):
+    def validate_password(self):
         assert self.password == self.confirm_password
         return self
