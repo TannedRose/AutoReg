@@ -1,15 +1,15 @@
 from typing import Optional
 from datetime import datetime
-from src.db.db import date
+from datetime import date
 from pydantic import BaseModel
 
 
 class NoteAdd(BaseModel):
     user_id: int
-    datetime: str = date
+    datetime: date
     category: str
-    name: Optional[str]
-    NDetail: Optional[str] = None
+    name: str
+    NDetail: str = None
     mileage: int
 
 

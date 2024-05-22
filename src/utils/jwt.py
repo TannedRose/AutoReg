@@ -6,7 +6,7 @@ from jwt import encode, decode, ExpiredSignatureError, PyJWTError
 from starlette.status import HTTP_401_UNAUTHORIZED
 
 __all__ = [
-    "JWTManager",
+    "jwt_manager",
 ]
 
 
@@ -14,13 +14,13 @@ class JWTManager(object):
 
     def __init__(
             self,
-            jwt_access_secret_key: str,
-            jwt_refresh_secret_key: str,
-            jwt_access_exp: timedelta,
-            jwt_refresh_exp: timedelta,
-            jwt_access_algorithm: str,
-            jwt_refresh_algorithm: str,
-            token_type: str
+            jwt_access_secret_key: str = "beruihvojbo398ivu9h3ocienrvb390jiorvbie",
+            jwt_refresh_secret_key: str = "38g9ho3hgw8q9h384wiehgurobgytoui24wgheobuyiwheob",
+            jwt_access_exp: timedelta = timedelta(minutes=1),
+            jwt_refresh_exp: timedelta = timedelta(minutes=5),
+            jwt_access_algorithm: str = "HS256",
+            jwt_refresh_algorithm: str = "HS512",
+            token_type: str = "Bearer"
     ) -> None:
         self.__jwt_access_secret_key = jwt_access_secret_key
         self.__jwt_refresh_secret_key = jwt_refresh_secret_key
@@ -117,3 +117,6 @@ class JWTManager(object):
             secret_key=self.__jwt_refresh_secret_key,
             algorithm=self.jwt_refresh_algorithm
         )
+
+
+jwt_manager = JWTManager()

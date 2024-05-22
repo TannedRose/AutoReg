@@ -1,16 +1,14 @@
-from fastapi import FastAPI, HTTPException, Query
-from fastapi.exceptions import RequestValidationError
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
-
 from auth.types import UserRegister, UserLogin
-from auth.utils.jwt import JWTManager
+from src.utils.jwt import jwt_manager
 from auth.utils.password import PasswordManager
 from src.dependencies import AsyncDBSession
 from src.models.models import User
-from src.settings import host, port
+from src.settings import settings
 
 app = FastAPI()
 app.add_middleware(
@@ -47,13 +45,13 @@ async def register(db_session: AsyncDBSession, data: UserRegister):
 async def login(db_session: AsyncDBSession, data: UserLogin):
     user = await db_session.scalars(statement=select(User).filter(User.email == data.email))
     if user is None:
-        raise  HTTPException(status_code=400, detail=f"user with email {data.email} is not exist")
+        raise HTTPException(status_code=400, detail=f"user with email {data.email} is not exist")
 
     if not PasswordManager.verity_password(plain_password=data.password, hashed_password=user.password):
         raise HTTPException(status_code=400, detail="passwords don't match")
 
-    return {"token": JWTManager.create_token()}
+    return jwt_manager.create_pair_token(payload={"sub": user.id})
 
 if __name__ == "__main__":
     from uvicorn import run
-    run(app=app, host=host, port=port)
+    run(app=app, host=settings.HOST, port=settings.PORT)
