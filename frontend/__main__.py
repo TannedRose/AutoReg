@@ -27,7 +27,7 @@ templating = Jinja2Templates(directory=settings.BASE_DIR / "templates")
 async def register(request: Request):
     return templating.TemplateResponse(
         request=request,
-        name="blog/register.html",
+        name="frontend/register.html",
     )
 
 
@@ -35,7 +35,7 @@ async def register(request: Request):
 async def login(request: Request):
     return templating.TemplateResponse(
         request=request,
-        name="blog/login.html",
+        name="frontend/login.html",
     )
 
 if __name__ == "__main__":
