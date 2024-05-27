@@ -16,6 +16,7 @@ class User(Base):
     def __str__(self) -> str:
         return self.email
 
+
 class NoteOrm(Base):
     __tablename__ = "notes"
     user_id = Column(CHAR(length=26), ForeignKey(column=User.id, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
@@ -24,7 +25,7 @@ class NoteOrm(Base):
     id = Column(INT, primary_key=True)
     name = Column(VARCHAR(length=16), nullable=False)
     category = Column(VARCHAR(length=16))
-    NDetail = Column(VARCHAR(length=16))
+    NumbDetail = Column(VARCHAR(length=16))
     mileage = Column(INT, nullable=False)
 
     def __str__(self) -> str:

@@ -9,7 +9,7 @@ from src.types import NoteAdd, Note, NoteID, NoteFindPar
 router = APIRouter(dependencies=[Authenticate])
 
 
-@router.post(path="/add", response_model=NoteID, status_code=201)
+@router.post(path="/", response_model=NoteID, status_code=201)
 async def add_note(
         request: Request, db_session: AsyncDBSession, data: NoteAdd
 ):
@@ -23,9 +23,8 @@ async def add_note(
         await db_session.refresh(instance=note)
         return Note.model_validate(obj=note)
 
-@router.post(path="/t", response_model=NoteID, status_code=201)
-async def t():
-    return "hi! nick"
+
+
 
 # @router.get(path="/get", response_model=)
 # async def get_notes(

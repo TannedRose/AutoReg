@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Union
-from pydantic import PostgresDsn, MariaDBDsn, MySQLDsn
+from pydantic import PostgresDsn, MariaDBDsn, MySQLDsn, PositiveInt
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from orjson import loads, dumps
@@ -13,9 +13,8 @@ class Settings(BaseSettings):
 
     BASE_DIR: Path = Path(__file__).resolve().parent.parent
     DATABASE_URL: Union[PostgresDsn, MariaDBDsn, MySQLDsn]
-    HOST: str = "127.0.0.1"
-    PORT: int = 80
-
+    HOST: str = "0.0.0.0"
+    PORT: PositiveInt = 80
 
 
 settings = Settings()
