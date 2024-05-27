@@ -38,6 +38,7 @@ async def register(db_session: AsyncDBSession, data: UserRegister):
     else:
         return {"status": "success"}
 
+
 @app.post(
     path="/api/auth/login",
     status_code=200,

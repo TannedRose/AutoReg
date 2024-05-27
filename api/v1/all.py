@@ -23,7 +23,9 @@ async def add_note(
         await db_session.refresh(instance=note)
         return Note.model_validate(obj=note)
 
-
+@router.post(path="/t", response_model=NoteID, status_code=201)
+async def t():
+    return "hi! nick"
 
 # @router.get(path="/get", response_model=)
 # async def get_notes(
