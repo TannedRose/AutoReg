@@ -2,7 +2,11 @@ from typing import Optional
 from datetime import datetime
 from datetime import date
 from pydantic import BaseModel
+from typing import Self
 
+from pydantic import EmailStr, PositiveInt, model_validator
+
+from .annotated_types import PasswordStr
 
 class NoteAdd(BaseModel):
     user_id: int
@@ -22,7 +26,10 @@ class NoteID(BaseModel):
     note_id: int
 
 
-class NoteFindPar(BaseModel):
+class NoteFind(BaseModel):
     note_category: str = None
     note_name: str = None
     note_mileage: int = None
+
+
+

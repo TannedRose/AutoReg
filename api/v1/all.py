@@ -1,15 +1,26 @@
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
 from src.models import NoteOrm
-from src.dependencies import AsyncDBSession, Authenticate
+from src.dependencies import (
+    AsyncDBSession,
+    # Authenticate
+)
 from fastapi import APIRouter, Depends, HTTPException
 from starlette.requests import Request
-from src.types import NoteAdd, Note, NoteID, NoteFindPar
+from src.types import NoteAdd, Note, NoteID, NoteFind
+from starlette.status import (
+    HTTP_200_OK,
+    HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+)
 
-router = APIRouter(dependencies=[Authenticate])
+router = APIRouter()
 
 
-@router.post(path="/", response_model=NoteID, status_code=201)
+@router.get(path="/note", response_model=NoteID, status_code=HTTP_201_CREATED)
 async def add_note(
         request: Request, db_session: AsyncDBSession, data: NoteAdd
 ):
@@ -24,11 +35,10 @@ async def add_note(
         return Note.model_validate(obj=note)
 
 
-
-
-# @router.get(path="/get", response_model=)
-# async def get_notes(
-#         # note_f: Annotated[NoteFindPar, Depends()],
-# ) -> list[Note]:
-#     notes = await NotesRepository.find()
-#     return notes
+@router.get(path="/get", response_model=list[Note], status_code=HTTP_200_OK)
+async def get_notes(
+        request: Request, db_session: AsyncDBSession, data: NoteFind
+):
+    notes = select(NoteID)
+    return notes
+    # notes = "select datetime, name, category, NumbDetail, mileage from notes"

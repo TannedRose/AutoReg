@@ -9,7 +9,6 @@ services:
     depends_on:
       - auth
       - api
-#      - frontend
     ports:
       - "80:80"
 
@@ -49,15 +48,15 @@ services:
     volumes:
       - ".:/opt"
 
-#  frontend:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    command: python -m frontend
-#    env_file:
-#      - ".env"
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#    volumes:
-#      - ".:/opt"
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m frontend
+    env_file:
+      - ".env"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ".:/opt"
