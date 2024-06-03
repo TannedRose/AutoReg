@@ -24,4 +24,5 @@ async_engine = create_async_engine(
     json_serializer=dumps,
     json_deserializer=loads,
 )
+
 async_session_maker = async_sessionmaker(bind=async_engine, expire_on_commit=False)

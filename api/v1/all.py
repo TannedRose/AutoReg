@@ -1,10 +1,12 @@
+from typing import Annotated
+
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
-from src.models import NoteOrm
+from src.models import Notes
 from src.dependencies import (
     AsyncDBSession,
-    # Authenticate
+    Authenticate
 )
 from fastapi import APIRouter, Depends, HTTPException
 from starlette.requests import Request
@@ -20,11 +22,11 @@ from starlette.status import (
 router = APIRouter()
 
 
-@router.get(path="/note", response_model=NoteID, status_code=HTTP_201_CREATED)
+@router.post(path="/note", response_model=NoteID, status_code=HTTP_201_CREATED)
 async def add_note(
-        request: Request, db_session: AsyncDBSession, data: NoteAdd
+        request: Request, db_session: AsyncDBSession, data: Annotated[NoteAdd, Depends()]
 ):
-    note = NoteOrm(**data.model_dump(), user_id=request.scope["state"]["user"].id)
+    note = Notes(**data.model_dump())
     db_session.add(instance=note)
     try:
         await db_session.commit()

@@ -1,19 +1,12 @@
-from typing import Optional
-from datetime import datetime
 from datetime import date
 from pydantic import BaseModel
-from typing import Self
-
-from pydantic import EmailStr, PositiveInt, model_validator
-
-from .annotated_types import PasswordStr
 
 class NoteAdd(BaseModel):
     user_id: int
-    datetime: date
+    # datetime: date
     category: str
     name: str
-    NDetail: str = None
+    PartNumber: str = None
     mileage: int
 
 
