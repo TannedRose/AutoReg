@@ -12,7 +12,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(frozen=True, case_sensitive=False)
 
     BASE_DIR: Path = Path(__file__).resolve().parent.parent
-    DATABASE_URL: Union[PostgresDsn, MariaDBDsn, MySQLDsn]
+    DATABASE_URL: PostgresDsn
+    # DATABASE_URL: Union[PostgresDsn, MariaDBDsn, MySQLDsn]
     HOST: str = "0.0.0.0"
     PORT: PositiveInt = 80
 
@@ -26,3 +27,5 @@ async_engine = create_async_engine(
 )
 
 async_session_maker = async_sessionmaker(bind=async_engine, expire_on_commit=False)
+
+
