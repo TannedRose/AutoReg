@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from sqlalchemy import select
+from sqlalchemy import select, delete, and_, func
 from sqlalchemy.exc import IntegrityError
 
 from src.models import Notes
@@ -24,9 +24,10 @@ router = APIRouter()
 
 @router.post(path="/note", response_model=NoteID, status_code=HTTP_201_CREATED)
 async def add_note(
-        request: Request, db_session: AsyncDBSession, data: Annotated[NoteAdd, Depends()]
+        db_session: AsyncDBSession, data: Annotated[NoteAdd, Depends()]
 ):
-    note = Notes(**data.model_dump())
+    note_dict = data.model_dump()
+    note = Notes(**note_dict)
     db_session.add(instance=note)
     try:
         await db_session.commit()
@@ -37,10 +38,20 @@ async def add_note(
         return Note.model_validate(obj=note)
 
 
-@router.get(path="/get", response_model=list[Note], status_code=HTTP_200_OK)
+@router.get(path="/note", status_code=HTTP_200_OK)
 async def get_notes(
-        request: Request, db_session: AsyncDBSession, data: NoteFind
+        db_session: AsyncDBSession,
 ):
-    notes = select(NoteID)
-    return notes
-    # notes = "select datetime, name, category, NumbDetail, mileage from notes"
+    query = select(Notes)
+    result = await db_session.execute(query)
+    note_models = result.scalars().all()
+    return note_models
+
+
+@router.delete(path="/note", status_code=HTTP_200_OK)
+async def delete_note(
+        db_session: AsyncDBSession,
+):
+    last_note = db_session.scalar(select(func.max(Notes.id)))
+    await db_session.execute(delete(Notes).filter(and_(Notes.id == last_note)))
+    return {"ok": True}

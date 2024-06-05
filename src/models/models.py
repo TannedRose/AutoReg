@@ -22,7 +22,7 @@ class User(Base):
 
 class Notes(Base):
     __tablename__ = "notes"
-    user_id = Column(CHAR(length=26), ForeignKey(column=User.id, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    user_id = Column(CHAR(length=26), ForeignKey(column=User.id, ondelete="RESTRICT", onupdate="CASCADE"), nullable=False)
 
     datetime = Column(TIMESTAMP, default=datetime.datetime.now(), nullable=False)
     id = Column(INT, primary_key=True)
@@ -34,12 +34,4 @@ class Notes(Base):
     def __str__(self) -> str:
         return self.name
 
-
-# async def create():
-#     async with engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.drop_all())
-
-# async def create():
-#     async with engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.create_all)
 
