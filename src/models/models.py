@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, CHAR, VARCHAR, INT, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, CHAR, VARCHAR, INT, ForeignKey, TIMESTAMP, CheckConstraint
 from sqlalchemy.ext.asyncio import engine
 from sqlalchemy.orm import relationship
 from ulid import ULID
@@ -8,9 +8,9 @@ from src.models.base import Base
 
 class User(Base):
     __tablename__ = "users"
-    # __table_args__ = (
-    #     CheckConstraint(sqltext="length(email) >= 5"),
-    # )
+    __table_args__ = (
+        CheckConstraint(sqltext="length(email) >= 5"),
+    )
 
     id = Column(CHAR(length=26), primary_key=True, default=lambda: f"{ULID()}")
     email = Column(VARCHAR(length=128), nullable=False, unique=True)
