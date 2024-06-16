@@ -21,7 +21,7 @@ router = APIRouter()
 
 
 @router.get(
-    path="auth/register",
+    path="/auth/register",
     status_code=HTTP_201_CREATED,
     # name="auth-register",
 )
@@ -39,7 +39,7 @@ async def register(db_session: AsyncDBSession, data: UserRegister):
 
 
 @router.get(
-    path="auth/login",
+    path="/auth/login",
     status_code=HTTP_200_OK,
 )
 async def login(db_session: AsyncDBSession, data: UserLogin):

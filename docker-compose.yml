@@ -33,7 +33,8 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ".:/opt"
+      - "./auth:/opt/auth"
+      - "./src:/opt/src"
 
   api:
     build:
@@ -46,18 +47,21 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ".:/opt"
+      - "./api:/opt/api:ro"
+      - "./src:/opt/src:ro"
+      - "./alembic.ini:/opt/alembic.ini"
+      - "./migrations:/opt/migrations:rw"
 
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: python -m frontend
-    env_file:
-      - ".env"
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - ".:/opt"
+#  frontend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    command: python -m frontend
+#    env_file:
+#      - ".env"
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    volumes:
+#      - ".:/opt"
 

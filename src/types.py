@@ -1,4 +1,3 @@
-from datetime import date
 from pydantic import BaseModel
 
 class NoteAdd(BaseModel):
@@ -23,6 +22,3 @@ class NoteFind(BaseModel):
     note_category: str = None
     note_name: str = None
     note_mileage: int = None
-
-
-

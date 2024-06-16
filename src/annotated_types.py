@@ -7,4 +7,4 @@ __all__ = ["PasswordStr"]
 
 PasswordPattern = compile(pattern=r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
 
-PasswordStr = Annotated[str, Predicate(func=lambda x: PasswordPattern.fullmatch(string=x)is not None)]
+PasswordStr = Annotated[str, Predicate(func=lambda x: PasswordPattern.fullmatch(string=x) is not None)]
