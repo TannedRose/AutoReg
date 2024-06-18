@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class NoteAdd(BaseModel):
-    user_id: int
+    # user_id: int
     # datetime: date
     category: str
     name: str

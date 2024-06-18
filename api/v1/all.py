@@ -22,7 +22,7 @@ from starlette.status import (
 router = APIRouter()
 
 
-@router.post(path="/note", response_model=NoteID, status_code=HTTP_201_CREATED)
+@router.post(path="/note",  status_code=HTTP_201_CREATED)
 async def add_note(
         db_session: AsyncDBSession, data: Annotated[NoteAdd, Depends()]
 ):
@@ -35,7 +35,7 @@ async def add_note(
         raise HTTPException(status_code=400)
     else:
         await db_session.refresh(instance=note)
-        return Note.model_validate(obj=note)
+        return {"status": "OK"}
 
 
 @router.get(path="/note", status_code=HTTP_200_OK)

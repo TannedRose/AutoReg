@@ -30,7 +30,7 @@ class Notes(Base):
     PartNumber = Column(VARCHAR(length=16))
     mileage = Column(INT, nullable=False)
 
-    user_id = relationship(argument=User, back_populates="notes")
+    # user_id = relationship(argument=User, back_populates="notes")
 
 
     def __str__(self) -> str:

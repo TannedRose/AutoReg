@@ -4,6 +4,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 from api import v1
+from src.dependencies import Authenticate
 from src.settings import settings
 
 app = FastAPI()
